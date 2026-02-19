@@ -22,10 +22,12 @@
 
 ## 界面预览
 ### 流量监测
-<img width="1883" height="1476" alt="4" src="https://github.com/user-attachments/assets/d0290af1-c2cf-4a59-897d-2eff1762fb18" />
+<img width="1884" height="1648" alt="1" src="https://github.com/user-attachments/assets/8037a86e-af30-4c2c-bdcb-aed6c1cbeb51" />
+
 
 ### 流量黑洞
-<img width="1885" height="1616" alt="2" src="https://github.com/user-attachments/assets/c25a214b-cd7c-4b31-8769-5577c60e5f76" />
+<img width="1885" height="1616" alt="2" src="https://github.com/user-attachments/assets/8281e3ca-ef49-4712-89f4-9fb84dab42b7" />
+
 
 
 ## 快速开始
