@@ -5,11 +5,13 @@ import time
 import random
 import requests
 import io
-from datetime import datetime, timedelta
+from datetime import datetime
+import logging, timedelta
 
 class DownOnlyService:
     """DownOnly服务 - 真实网络下载版"""
     
+        logger = logging.getLogger(__name__)
     def __init__(self):
         self.is_running = False
         self.current_speed = 0.0
@@ -41,9 +43,9 @@ class DownOnlyService:
             import services.config_service as config_service
             config = config_service.get_config()
             self.urls = config.get('urls', [])
-            print(f"从配置加载URL列表: {self.urls}")
+            logger.info(f"从配置加载URL列表: {self.urls}")
         except Exception as e:
-            print(f"从配置加载URL失败: {e}")
+            logger.info(f"从配置加载URL失败: {e}")
             self.urls = []
     
     def update_urls_from_config(self):
@@ -79,15 +81,15 @@ class DownOnlyService:
         self.speed_history = []
         
         # 添加启动日志
-        print("DownOnly服务启动 - 真实网络下载模式")
-        print(f"当前URL列表: {self.urls}")
+        logger.info("DownOnly服务启动 - 真实网络下载模式")
+        logger.info(f"当前URL列表: {self.urls}")
         
         # 启动工作线程
         threading.Thread(target=self.worker, daemon=True).start()
         threading.Thread(target=self.speed_tracker, daemon=True).start()
         
         # 立即添加一条启动日志
-        print("DownOnly服务已启动")
+        logger.info("DownOnly服务已启动")
     
     def stop_service(self):
         """停止服务"""
@@ -97,7 +99,7 @@ class DownOnlyService:
             self.total_uptime_seconds += uptime
             
         self.is_running = False
-        print("DownOnly服务已停止")
+        logger.info("DownOnly服务已停止")
     
     def worker(self):
         """工作线程 - 真实网络下载"""
@@ -111,7 +113,7 @@ class DownOnlyService:
                 time.sleep(sleep_time)
                 
             except Exception as e:
-                print(f"下载线程错误: {e}")
+                logger.info(f"下载线程错误: {e}")
                 time.sleep(5)
     
     def speed_tracker(self):
@@ -134,7 +136,7 @@ class DownOnlyService:
                 
                 time.sleep(1)
             except Exception as e:
-                print(f"速度追踪错误: {e}")
+                logger.info(f"速度追踪错误: {e}")
                 time.sleep(1)
     
     def real_download(self):
@@ -145,7 +147,7 @@ class DownOnlyService:
         try:
             # 随机选择URL
             if not self.urls:
-                print("没有可用的下载URL，等待配置...")
+                logger.info("没有可用的下载URL，等待配置...")
                 time.sleep(10)
                 return
                 
@@ -167,7 +169,7 @@ class DownOnlyService:
                         file_size = random.randint(100, 1000) * 1024 * 1024  # 其他文件 ~100MB-1GB
                 
             except Exception as e:
-                print(f"获取文件大小失败: {e}")
+                logger.info(f"获取文件大小失败: {e}")
                 # 使用默认文件大小
                 file_size = random.randint(100, 1000) * 1024 * 1024
             
@@ -178,7 +180,7 @@ class DownOnlyService:
             last_log_time = 0
             last_speed_update = 0
             
-            print(f"开始下载: {url} (大小: {file_size / 1024 / 1024:.1f} MB)")
+            logger.info(f"开始下载: {url} (大小: {file_size / 1024 / 1024:.1f} MB)")
             
             try:
                 # 使用流式下载
@@ -218,7 +220,7 @@ class DownOnlyService:
                         if current_time - last_log_time >= 2:
                             progress = (downloaded_bytes / actual_file_size) * 100 if actual_file_size > 0 else 0
                             speed_display = (downloaded_bytes / elapsed_time / 1024) if elapsed_time > 0 else 0
-                            print(f"下载进度: {downloaded_bytes / 1024 / 1024:.1f}/{actual_file_size / 1024 / 1024:.1f} MB ({progress:.1f}%) {speed_display:.1f} KB/s")
+                            logger.info(f"下载进度: {downloaded_bytes / 1024 / 1024:.1f}/{actual_file_size / 1024 / 1024:.1f} MB ({progress:.1f}%) {speed_display:.1f} KB/s")
                             last_log_time = current_time
                         
                         # 清理缓冲区以避免内存泄漏
@@ -227,7 +229,7 @@ class DownOnlyService:
                             discard_buffer.truncate(0)
                         
             except requests.exceptions.RequestException as e:
-                print(f"下载请求失败: {e}")
+                logger.info(f"下载请求失败: {e}")
                 # 等待一段时间后重试
                 time.sleep(random.uniform(5, 15))
                 return
@@ -236,9 +238,9 @@ class DownOnlyService:
             download_duration = time.time() - start_time
             if download_duration > 0:
                 avg_speed_mbps = (downloaded_bytes / download_duration / 1024 / 1024) * 8
-                print(f"下载完成: {downloaded_bytes / 1024 / 1024:.1f} MB, 平均速度: {avg_speed_mbps:.2f} Mbps")
+                logger.info(f"下载完成: {downloaded_bytes / 1024 / 1024:.1f} MB, 平均速度: {avg_speed_mbps:.2f} Mbps")
             else:
-                print(f"下载完成: {downloaded_bytes / 1024 / 1024:.1f} MB")
+                logger.info(f"下载完成: {downloaded_bytes / 1024 / 1024:.1f} MB")
             
             # 清理资源
             discard_buffer.close()
@@ -248,7 +250,7 @@ class DownOnlyService:
                 time.sleep(random.uniform(2, 8))
             
         except Exception as e:
-            print(f"下载错误: {e}")
+            logger.info(f"下载错误: {e}")
             # 发生错误时等待更长时间
             time.sleep(random.uniform(10, 30))
     
@@ -272,7 +274,7 @@ class DownOnlyService:
         # 检查是否超过配额
         if self.today_total_bytes >= self.daily_quota_bytes:
             self.stop_service()
-            print("今日流量已达到配额，自动停止服务")
+            logger.info("今日流量已达到配额，自动停止服务")
             return {
                 "is_running": False,
                 "status": "quota_exceeded",
@@ -283,7 +285,7 @@ class DownOnlyService:
             }
         
         # 添加调试日志
-        print(f"状态调试: today_bytes={self.today_total_bytes}, current_speed={self.current_speed}")
+        logger.info(f"状态调试: today_bytes={self.today_total_bytes}, current_speed={self.current_speed}")
         
         return {
             "is_running": True,
@@ -310,7 +312,7 @@ class DownOnlyService:
     def update_daily_quota(self, quota_gb):
         """更新每日配额"""
         self.daily_quota_bytes = quota_gb * 1024 * 1024 * 1024
-        print(f"每日配额已更新为: {quota_gb} GB")
+        logger.info(f"每日配额已更新为: {quota_gb} GB")
         
         # 重新加载URL列表
         self.update_urls_from_config()

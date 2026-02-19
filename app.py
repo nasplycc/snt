@@ -8,6 +8,8 @@ import sys
 import os
 import threading
 import json
+import logging
+from logging.handlers import RotatingFileHandler
 from flask import Flask, render_template, jsonify, request
 from datetime import datetime
 from datetime import timedelta
@@ -24,14 +26,45 @@ os.makedirs('static/js', exist_ok=True)
 os.makedirs('static/css', exist_ok=True)
 os.makedirs('templates', exist_ok=True)
 os.makedirs('data', exist_ok=True)
+os.makedirs('logs', exist_ok=True)
+
+# 配置日志系统
+def setup_logging():
+    """配置日志系统"""
+    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    
+    # 创建文件处理器，限制每个文件10MB，保留5个备份
+    file_handler = RotatingFileHandler(
+        'logs/smart_network_tool.log',
+        maxBytes=10*1024*1024,  # 10MB
+        backupCount=5,
+        encoding='utf-8'
+    )
+    file_handler.setFormatter(logging.Formatter(log_format))
+    
+    # 创建控制台处理器
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(logging.Formatter(log_format))
+    
+    # 配置根日志器
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+    
+    return logger
+
+# 初始化日志系统
+logger = setup_logging()
+logger.info("Smart Network Tool 启动中...")
 
 # 导入并注册路由
 try:
     from routes import register_routes
     register_routes(app)
-    print("路由注册成功")
+    logger.info("路由注册成功")
 except ImportError as e:
-    print(f"路由导入失败: {e}")
+    logger.error(f"路由导入失败: {e}")
     # 创建简单的路由作为备用
     @app.route('/api/monitor/interfaces')
     def get_interfaces():
@@ -121,15 +154,15 @@ def index():
         config = get_config()
         interfaces = ['enp2s0', 'enp3s0', 'NodeBabyLink']  # 使用修复后的接口列表
         
-        print(f"首页渲染，配置: {config}")
-        print(f"网卡列表: {interfaces}")
+        logger.info(f"首页渲染，配置: {config}")
+        logger.info(f"网卡列表: {interfaces}")
         
         return render_template('index.html', 
                               interfaces=interfaces,
                               config=config,
                               now=datetime.now())
     except Exception as e:
-        print(f"渲染首页错误: {e}")
+        logger.error(f"渲染首页错误: {e}")
         # 使用默认配置
         default_config = {
             "downonly": {
@@ -165,20 +198,20 @@ def test():
 # 初始化应用
 def init_app():
     """初始化应用"""
-    print("Smart Network Tool 初始化中...")
+    logger.info("Smart Network Tool 初始化中...")
     
     try:
         # 启动后台服务
         from services.downonly_service import downonly_service
-        print("DownOnly服务已初始化")
+        logger.info("DownOnly服务已初始化")
         
         # 启动配置服务
         from services.config_service import config_service
         print("配置服务已初始化")
         
-        print("Smart Network Tool 初始化完成")
+        logger.info("Smart Network Tool 初始化完成")
     except Exception as e:
-        print(f"初始化错误: {e}")
+        logger.error(f"初始化错误: {e}")
 
 if __name__ == '__main__':
     init_app()
@@ -191,5 +224,5 @@ if __name__ == '__main__':
         except:
             pass
     
-    print(f"Smart Network Tool 已启动 → http://0.0.0.0:{port}")
+    logger.info(f"Smart Network Tool 已启动 → http://0.0.0.0:{port}")
     app.run(host='0.0.0.0', port=port, debug=False)
