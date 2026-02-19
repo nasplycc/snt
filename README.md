@@ -85,7 +85,6 @@ python3 app.py [端口]
 ```bash
 sudo ./install_systemd.sh [用户名]
 ```
-- 如果不指定用户名，默认为 Jaben
 - 服务会自动开机自启
 
 **管理命令:**
