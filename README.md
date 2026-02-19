@@ -22,7 +22,7 @@
 
 ## 界面预览
 ### 流量监测
-<img width="1884" height="1648" alt="1" src="https://github.com/user-attachments/assets/8037a86e-af30-4c2c-bdcb-aed6c1cbeb51" />
+<img width="1883" height="1476" alt="4" src="https://github.com/user-attachments/assets/a11ee615-1c09-4369-ba1f-1f78b4cc9d46" />
 
 
 ### 流量黑洞
