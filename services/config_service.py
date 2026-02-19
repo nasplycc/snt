@@ -5,13 +5,11 @@ import json
 import logging
 from datetime import datetime
 
-# 获取日志器
-self.logger = logging.getLogger(__name__)
-
 class ConfigService:
     """配置服务 - 修复版"""
     
     def __init__(self):
+        self.logger = logging.getLogger(__name__)
         # 使用正确的配置文件路径
         self.config_file = "/vol1/1000/Smart-Network-Tool/data/config.json"
         
@@ -32,8 +30,8 @@ class ConfigService:
         
         # 加载配置
         self.config = self.load_config()
-        self.self.logger.info(f"配置服务初始化完成")
-        self.self.logger.info(f"配置文件: {self.config_file}")
+        self.logger.info(f"配置服务初始化完成")
+        self.logger.info(f"配置文件: {self.config_file}")
     
     def load_config(self):
         """加载配置 - 修复版"""
