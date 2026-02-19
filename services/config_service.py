@@ -6,7 +6,7 @@ import logging
 from datetime import datetime
 
 # 获取日志器
-logger = logging.getLogger(__name__)
+self.logger = logging.getLogger(__name__)
 
 class ConfigService:
     """配置服务 - 修复版"""
@@ -32,22 +32,22 @@ class ConfigService:
         
         # 加载配置
         self.config = self.load_config()
-        logger.info(f"配置服务初始化完成")
-        logger.info(f"配置文件: {self.config_file}")
+        self.self.logger.info(f"配置服务初始化完成")
+        self.self.logger.info(f"配置文件: {self.config_file}")
     
     def load_config(self):
         """加载配置 - 修复版"""
         try:
-            logger.info(f"正在加载配置文件: {self.config_file}")
+            self.logger.info(f"正在加载配置文件: {self.config_file}")
             
             if os.path.exists(self.config_file):
                 with open(self.config_file, 'r', encoding='utf-8') as f:
                     config = json.load(f)
-                    logger.info(f"配置文件已加载")
+                    self.logger.info(f"配置文件已加载")
                     
                     # 检查是否有嵌套的downonly配置，如果有则合并
                     if 'downonly' in config and isinstance(config['downonly'], dict):
-                        logger.info("检测到嵌套的downonly配置，进行合并")
+                        self.logger.info("检测到嵌套的downonly配置，进行合并")
                         # 将downonly中的配置合并到顶层
                         nested_config = config['downonly']
                         for key, value in nested_config.items():
@@ -61,15 +61,15 @@ class ConfigService:
                         if key not in config:
                             config[key] = value
                     
-                    logger.info(f"最终配置结构: {config}")
+                    self.logger.info(f"最终配置结构: {config}")
                     return config
             else:
-                logger.info("配置文件不存在，创建默认配置")
+                self.logger.info("配置文件不存在，创建默认配置")
                 # 保存默认配置
                 self.save_config(self.default_config.copy())
                 return self.default_config.copy()
         except Exception as e:
-            logger.info(f"加载配置失败: {e}")
+            self.logger.info(f"加载配置失败: {e}")
             # 使用默认配置
             self.save_config(self.default_config.copy())
             return self.default_config.copy()
@@ -77,7 +77,7 @@ class ConfigService:
     def save_config(self, config):
         """保存配置 - 修复版"""
         try:
-            logger.info(f"正在保存配置到默认配置文件: {config}")
+            self.logger.info(f"正在保存配置到默认配置文件: {config}")
             
             # 确保目录存在
             os.makedirs(os.path.dirname(self.config_file), exist_ok=True)
@@ -89,11 +89,11 @@ class ConfigService:
             # 更新内存中的配置
             self.config = config.copy()
             
-            logger.info(f"配置已保存到默认配置文件: {self.config_file}")
+            self.logger.info(f"配置已保存到默认配置文件: {self.config_file}")
             return True
             
         except Exception as e:
-            logger.info(f"保存配置失败: {e}")
+            self.logger.info(f"保存配置失败: {e}")
             return False
     
     def get_config(self):
@@ -123,9 +123,9 @@ class ConfigService:
                 from services.downonly_service import update_daily_quota
                 update_daily_quota(updates.get('daily_quota_min_gb', 150))
             except Exception as e:
-                logger.info(f"更新流量黑洞配额失败: {e}")
+                self.logger.info(f"更新流量黑洞配额失败: {e}")
         
-        logger.info(f"更新配置后最终配置: {config}")
+        self.logger.info(f"更新配置后最终配置: {config}")
         return self.save_config(config)
     
     def reset_to_default(self):

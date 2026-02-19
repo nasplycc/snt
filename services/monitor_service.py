@@ -3,16 +3,17 @@
 import psutil
 import time
 import threading
-from datetime import datetime
-import logging, timedelta
+from datetime import datetime, timedelta
+import logging
 import random
 import subprocess
+import socket
 
 class MonitorService:
     """网卡监测服务 - 修复版 - 支持真实网卡名称和流量黑洞流量"""
     
-        logger = logging.getLogger(__name__)
     def __init__(self):
+        self.logger = logging.getLogger(__name__)
         self.interfaces = []
         self.interface_stats = {}
         self.last_stats = {}
@@ -38,7 +39,7 @@ class MonitorService:
                     
                 # 检查是否有IPv4地址
                 addrs = psutil.net_if_addrs().get(interface, [])
-                has_ipv4 = any(addr.family == psutil.AF_INET for addr in addrs)
+                has_ipv4 = any(addr.family == socket.AF_INET for addr in addrs)
                 
                 if has_ipv4:
                     self.interfaces.append(interface)
@@ -79,11 +80,11 @@ class MonitorService:
                 
                 # 如果还是没有，使用固定列表
                 if not self.interfaces:
-                    logger.info("使用固定网卡列表")
+                    self.logger.info("使用固定网卡列表")
                     self.interfaces = ['enp2s0', 'enp3s0', 'NodeBabyLink']
                     
         except Exception as e:
-            logger.info(f"获取网卡列表失败: {e}")
+            self.logger.info(f"获取网卡列表失败: {e}")
             # 使用默认列表
             self.interfaces = ['enp2s0', 'enp3s0', 'NodeBabyLink']
     
