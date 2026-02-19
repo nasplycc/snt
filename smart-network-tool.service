@@ -1,0 +1,15 @@
+[Unit]
+Description=Smart Network Tool - Integrated network monitoring and DownOnly traffic consumption
+After=network.target
+
+[Service]
+Type=simple
+User=Jaben
+WorkingDirectory=/vol1/1000/Smart-Network-Tool
+ExecStart=/usr/bin/python3 app.py
+Restart=always
+RestartSec=10
+Environment=PYTHONPATH=/vol1/1000/Smart-Network-Tool
+
+[Install]
+WantedBy=multi-user.target

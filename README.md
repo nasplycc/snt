@@ -79,12 +79,48 @@ python3 app.py [端口]
 
 ## 开机自启
 
-### 飞牛NAS 安装
+### 推荐方式：systemd 服务管理（推荐）
+
+**安装服务:**
 ```bash
-sudo ./install.sh
+sudo ./install_systemd.sh [用户名]
+```
+- 如果不指定用户名，默认为 Jaben
+- 服务会自动开机自启
+
+**管理命令:**
+```bash
+# 查看服务状态
+systemctl status smart-network-tool
+
+# 启动服务
+systemctl start smart-network-tool
+
+# 停止服务
+systemctl stop smart-network-tool
+
+# 重启服务
+systemctl restart smart-network-tool
+
+# 禁用开机自启
+systemctl disable smart-network-tool
+
+# 启用开机自启
+systemctl enable smart-network-tool
+
+# 查看实时日志
+journalctl -u smart-network-tool -f
+
+# 查看应用日志
+tail -f logs/smart_network_tool.log
 ```
 
-### 手动配置（screen 方式）
+**卸载服务:**
+```bash
+sudo ./uninstall_systemd.sh
+```
+
+### 备用方案：screen 方式（已弃用）
 
 1. 安装 screen:
 ```bash
