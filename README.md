@@ -133,7 +133,7 @@ Smart-Network-Tool/
 - `GET /api/monitor/stats/<interface>` - 获取网卡实时统计
 - `GET /api/monitor/history/<interface>` - 获取网卡历史数据
 
-### DownOnly
+### 流量黑洞服务
 - `GET /api/downonly/status` - 获取服务状态
 - `POST /api/downonly/toggle` - 启停服务
 - `GET /api/downonly/history?month=1` - 获取月度历史
