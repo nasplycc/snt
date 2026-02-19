@@ -1,0 +1,15 @@
+{
+    "keys": [
+        "41184b4c475b43dcb199bd8cec43574c.kOK3S8LJ9xCHXMFA"
+    ],
+    "current_key_index": 0,
+    "key_usage_stats": {
+        "41184b4c475b43dcb199bd8cec43574c.kOK3S8LJ9xCHXMFA": {
+            "requests_count": 0,
+            "last_used": null,
+            "success_count": 0,
+            "error_count": 0,
+            "is_active": true
+        }
+    }
+}
