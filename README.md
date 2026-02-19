@@ -59,12 +59,24 @@ pip3 install flask psutil requests
 
 ### 2. 启动应用
 
-**前台运行（调试用）:**
+**调试模式（快速启动）:**
+```bash
+python3 app.py [端口]
+```
+- 直接运行Python脚本，适合快速调试
+- 支持端口号参数（默认8080）
+- 生产模式运行（debug=False）
+
+**完整启动（推荐）:**
 ```bash
 ./start.sh [端口]
 ```
+- 检查并自动安装依赖（Flask/psutil/requests）
+- 创建必要的数据目录
+- 显示友好的启动信息和访问地址
+- 包含环境检查和错误处理
 
-**后台运行（推荐）:**
+**后台运行（生产环境）:**
 ```bash
 ./start_daemon.sh [端口]
 ```
