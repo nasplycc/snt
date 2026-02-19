@@ -17,7 +17,6 @@
 - **时段管理**: 支持自定义运行时间段，可设置在夜间等低峰期运行
 - **智能间隔**: 自动调整下载间隔，避免网络连接被检测异常
 - **实时监控**: 提供详细的下载速度曲线和流量统计
-- **历史分析**: 完整的月度流量使用记录和趋势分析
 - **运行日志**: 详细的下载过程日志，便于监控和故障排查
 
 ## 界面预览
@@ -149,19 +148,28 @@ screen -ls  # 查看会话
 
 ```
 Smart-Network-Tool/
-├── app.py              # 主程序
-├── templates/
-│   └── index.html      # 前端页面
-├── data/               # 数据目录
-│   ├── config.json     # 配置文件
-│   ├── stats.json      # 下载数据统计
-│   └── daily_stats.json # 网卡统计
-├── start.sh            # 启动脚本
-├── start_daemon.sh     # 后台启动脚本
-├── stop.sh             # 停止脚本
-├── install.sh          # 安装脚本
-└── README.md           # 说明文档
+├── app.py                    # 主应用程序
+├── README.md                 # 项目说明文档
+├── LOGGING.md               # 日志系统文档
+├── SYSTEMD.md               # systemd服务管理文档
+├── smart-network-tool.service # systemd服务配置文件
+├── install_systemd_final.sh # systemd安装脚本
+├── install.sh               # 项目安装脚本
+├── start.sh                 # 启动脚本
+├── start_daemon.sh          # 后台启动脚本
+├── stop.sh                  # 停止脚本
+├── uninstall_systemd.sh     # systemd卸载脚本
+├── requirements.txt         # Python依赖
+├── data/                    # 数据目录
+├── logs/                    # 日志目录
+├── services/                # 服务模块
+├── routes/                  # 路由模块
+├── templates/               # HTML模板
+├── static/                  # 静态资源
+└── .gitignore              # Git忽略文件
+
 ```
+
 
 ## API 接口
 
