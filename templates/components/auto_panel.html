@@ -1,0 +1,51 @@
+<div class="panel">
+    <h2>⚙️ 配置设置</h2>
+    <div class="config-tabs">
+        <button class="tab-btn active" onclick="switchTab('basic')">基础设置</button>
+        <button class="tab-btn" onclick="switchTab('sources')">下载源</button>
+        <button class="tab-btn" onclick="switchTab('time')">时间窗口</button>
+    </div>
+    
+    <div class="tab-content" id="basic-tab">
+        <div class="form-group">
+            <label>每日下载限额 (MB)</label>
+            <input type="number" id="daily-limit" class="form-control" value="20480">
+        </div>
+        
+        <div class="form-group">
+            <label>下载间隔</label>
+            <div class="interval-inputs">
+                <input type="number" id="min-interval" class="form-control" placeholder="最小秒数" value="60">
+                <span>秒</span>
+                <input type="number" id="max-interval" class="form-control" placeholder="最大秒数" value="300">
+                <span>秒</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="sources-tab" style="display: none;">
+        <div class="form-group">
+            <label>下载源列表 (每行一个)</label>
+            <textarea id="download-sources" class="form-control" rows="6" placeholder="https://example.com/file.iso"></textarea>
+        </div>
+        <button onclick="updateConfig()" class="btn btn-primary">保存配置</button>
+    </div>
+    
+    <div class="tab-content" id="time-tab" style="display: none;">
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="time-window-enabled"> 启用时间窗口限制
+            </label>
+        </div>
+        <div class="form-group">
+            <label>时间窗口 (小时)</label>
+            <div class="time-inputs">
+                <input type="number" id="start-hour" class="form-control" placeholder="开始小时" value="2" min="0" max="23">
+                <span>时</span>
+                <input type="number" id="end-hour" class="form-control" placeholder="结束小时" value="6" min="0" max="23">
+                <span>时</span>
+            </div>
+        </div>
+        <button onclick="updateConfig()" class="btn btn-primary">保存配置</button>
+    </div>
+</div>

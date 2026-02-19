@@ -1,0 +1,30 @@
+{
+  "downonly": {
+    "daily_quota_max_gb": 200,
+    "daily_quota_min_gb": 150,
+    "schedule_end": "23:59",
+    "schedule_start": "00:00",
+    "sleep_max_minutes": 20,
+    "sleep_min_minutes": 10,
+    "speed_limit_mbps": 5,
+    "urls": [
+      "http://updates-http.cdn-apple.com/2019WinterFCS/fullrestores/041-39257/32129B6C-292C-11E9-9E72-4511412B0A59/iPhone_4.7_12.1.4_16D57_Restore.ipsw",
+      "http://speedtest.tele2.net/10GB.zip",
+      "http://speedtest.tele2.net/100MB.zip",
+      "https://mirrors.tuna.tsinghua.edu.cn/speedtest/100mb.bin"
+    ]
+  },
+  "monitor": {
+    "chart_refresh": 10,
+    "history_hours": 24,
+    "real_time_refresh": 1
+  },
+  "speed_limit_mbps": 5,
+  "daily_quota_min_gb": 150,
+  "daily_quota_max_gb": 200,
+  "schedule_start": "00:00",
+  "schedule_end": "23:59",
+  "sleep_min_minutes": 2,
+  "sleep_max_minutes": 20,
+  "urls": []
+}

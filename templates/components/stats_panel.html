@@ -1,0 +1,27 @@
+<div class="panel">
+    <h2>📊 流量统计</h2>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <span class="stat-label">今日下载</span>
+            <span class="stat-value" id="today-download">0 MB</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">今日上传</span>
+            <span class="stat-value" id="today-upload">0 MB</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">任务数量</span>
+            <span class="stat-value" id="task-count">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">限额进度</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="limit-progress" style="width: 0%"></div>
+            </div>
+            <span class="stat-value" id="limit-text">0/20480 MB</span>
+        </div>
+    </div>
+    <div class="stats-actions">
+        <button onclick="resetStats()" class="btn btn-secondary">重置统计</button>
+    </div>
+</div>

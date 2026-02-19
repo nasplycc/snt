@@ -1,0 +1,89 @@
+<div class="panel">
+    <h2>📈 实时监控</h2>
+    <div class="monitor-status">
+        <div class="status-indicator" id="status-indicator">
+            <span class="status-dot offline"></span>
+            <span id="status-text">离线</span>
+        </div>
+        <div class="current-interface">
+            当前接口: <span id="current-interface">-</span>
+        </div>
+    </div>
+    
+    <div class="monitor-charts">
+        <div class="chart-container">
+            <h3>流量趋势</h3>
+            <canvas id="traffic-chart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="monitor-stats">
+            <div class="monitor-stat">
+                <span class="stat-label">当前下载</span>
+                <span class="stat-value" id="current-download">0 MB</span>
+            </div>
+            <div class="monitor-stat">
+                <span class="stat-label">当前上传</span>
+                <span class="stat-value" id="current-upload">0 MB</span>
+            </div>
+            <div class="monitor-stat">
+                <span class="stat-label">运行时长</span>
+                <span class="stat-value" id="runtime">00:00:00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 初始化图表
+const ctx = document.getElementById('traffic-chart').getContext('2d');
+let trafficChart;
+
+function initChart() {
+    trafficChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: '下载',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.1
+            }, {
+                label: '上传',
+                data: [],
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'MB'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// 更新图表数据
+function updateChart(timestamp, download, upload) {
+    if (trafficChart.data.labels.length > 50) {
+        trafficChart.data.labels.shift();
+        trafficChart.data.datasets[0].data.shift();
+        trafficChart.data.datasets[1].data.shift();
+    }
+    
+    trafficChart.data.labels.push(timestamp);
+    trafficChart.data.datasets[0].data.push(download);
+    trafficChart.data.datasets[1].data.push(upload);
+    trafficChart.update();
+}
+</script>

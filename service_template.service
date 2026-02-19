@@ -1,0 +1,15 @@
+[Unit]
+Description={{DESCRIPTION}}
+After=network.target
+
+[Service]
+Type=simple
+User={{USER}}
+WorkingDirectory={{WORKING_DIR}}
+ExecStart={{PYTHON_CMD}} {{APP_FILE}} {{PORT}}
+Restart=always
+RestartSec=10
+Environment=PYTHONPATH={{WORKING_DIR}}
+
+[Install]
+WantedBy=multi-user.target

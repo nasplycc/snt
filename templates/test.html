@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Network Tool - 测试页面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-4">
+        <h1>Smart Network Tool - 测试页面</h1>
+        
+        <div class="mt-4">
+            <h2>API测试</h2>
+            <div id="api-test" class="bg-gray-100 p-4 rounded">
+                <button onclick="testAPI()" class="bg-blue-500 text-white px-4 py-2 rounded">测试API连接</button>
+                <div id="api-result" class="mt-2"></div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h2>网卡测试</h2>
+            <div id="interface-test" class="bg-gray-100 p-4 rounded">
+                <button onclick="testInterfaces()" class="bg-green-500 text-white px-4 py-2 rounded">测试网卡列表</button>
+                <div id="interface-result" class="mt-2"></div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h2>流量黑洞测试</h2>
+            <div id="downonly-test" class="bg-gray-100 p-4 rounded">
+                <button onclick="testDownOnly()" class="bg-purple-500 text-white px-4 py-2 rounded">测试流量黑洞服务</button>
+                <div id="downonly-result" class="mt-2"></div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h2>前端组件测试</h2>
+            <div id="frontend-test" class="bg-gray-100 p-4 rounded">
+                <button onclick="testFrontend()" class="bg-orange-500 text-white px-4 py-2 rounded">测试前端组件</button>
+                <div id="frontend-result" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function testAPI() {
+            try {
+                const response = await fetch('/api/monitor/interfaces');
+                const data = await response.json();
+                document.getElementById('api-result').innerHTML = `
+                    <div class="text-green-600">✅ API连接成功</div>
+                    <div>返回数据: ${JSON.stringify(data)}</div>
+                `;
+            } catch (error) {
+                document.getElementById('api-result').innerHTML = `
+                    <div class="text-red-600">❌ API连接失败: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function testInterfaces() {
+            try {
+                const response = await fetch('/api/monitor/interfaces');
+                const interfaces = await response.json();
+                document.getElementById('interface-result').innerHTML = `
+                    <div class="text-green-600">✅ 网卡列表获取成功</div>
+                    <div>网卡列表: ${interfaces.join(', ')}</div>
+                    <div>数量: ${interfaces.length}</div>
+                `;
+            } catch (error) {
+                document.getElementById('interface-result').innerHTML = `
+                    <div class="text-red-600">❌ 网卡列表获取失败: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function testDownOnly() {
+            try {
+                // 测试状态
+                const statusResponse = await fetch('/api/downonly/status');
+                const status = await statusResponse.json();
+                
+                // 测试切换
+                const toggleResponse = await fetch('/api/downonly/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const toggle = await toggleResponse.json();
+                
+                // 测试日志
+                const logsResponse = await fetch('/api/downonly/logs');
+                const logs = await logsResponse.json();
+                
+                document.getElementById('downonly-result').innerHTML = `
+                    <div class="text-green-600">✅ 流量黑洞服务测试成功</div>
+                    <div>初始状态: ${JSON.stringify(status)}</div>
+                    <div>切换后状态: ${JSON.stringify(toggle)}</div>
+                    <div>日志条目: ${logs.entries.length}</div>
+                `;
+            } catch (error) {
+                document.getElementById('downonly-result').innerHTML = `
+                    <div class="text-red-600">❌ 流量黑洞服务测试失败: ${error.message}</div>
+                `;
+            }
+        }
+        
+        async function testFrontend() {
+            try {
+                // 检查必要的JavaScript模块是否加载
+                const modules = ['MonitorModule', 'TrafficBlackHoleModule', 'ConfigModule', 'Utils', 'ChartConfigs'];
+                let results = [];
+                
+                for (let module of modules) {
+                    if (typeof window[module] !== 'undefined') {
+                        results.push(`✅ ${module}: 已加载`);
+                    } else {
+                        results.push(`❌ ${module}: 未加载`);
+                    }
+                }
+                
+                document.getElementById('frontend-result').innerHTML = `
+                    <div class="text-green-600">✅ 前端组件测试完成</div>
+                    <div>${results.join('<br>')}</div>
+                `;
+            } catch (error) {
+                document.getElementById('frontend-result').innerHTML = `
+                    <div class="text-red-600">❌ 前端组件测试失败: ${error.message}</div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

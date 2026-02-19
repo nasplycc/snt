@@ -1,0 +1,27 @@
+<div class="panel">
+    <h2>🎮 手动控制</h2>
+    <div class="control-group">
+        <div class="form-group">
+            <label for="interface-select">网络接口</label>
+            <select id="interface-select" class="form-control">
+                <option value="">加载中...</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>时间窗口设置</label>
+            <div class="time-window-info" id="time-window-info">
+                加载中...
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button id="start-btn" onclick="startDownload()" class="btn btn-primary">
+                <span>▶️ 开始下载</span>
+            </button>
+            <button id="stop-btn" onclick="stopDownload()" class="btn btn-danger" disabled>
+                <span>⏹️ 停止下载</span>
+            </button>
+        </div>
+    </div>
+</div>
