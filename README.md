@@ -117,7 +117,7 @@ Smart-Network-Tool/
 │   └── index.html      # 前端页面
 ├── data/               # 数据目录
 │   ├── config.json     # 配置文件
-│   ├── stats.json      # DownOnly 统计
+│   ├── stats.json      # 下载数据统计
 │   └── daily_stats.json # 网卡统计
 ├── start.sh            # 启动脚本
 ├── start_daemon.sh     # 后台启动脚本
