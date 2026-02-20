@@ -227,3 +227,16 @@ MIT License
 - 本工具仅限个人技术学习与带宽测试场景。
 - 使用者须确保符合所在地法规及运营商政策，并自行承担因流量异常或服务限制引发的风险。
 - 作者不对任何使用后果提供担保或承担责任。
+
+## 微信群
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/112cc959-a47a-4b38-8f40-95a7715429a8" alt="微信群" width="300" height="300"">
+</p>
+
+## 微信公众号
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/20290a26-f15b-4549-a366-cd16ef42ba13" alt="微信公众号" width="220" height="220"">
+</p>
+
+
+
