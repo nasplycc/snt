@@ -231,7 +231,7 @@ MIT License
 
 ## 微信群
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/5f3f4058-fbc4-4426-a006-da6e26c2ec13" alt="微信群" width="300" height="300"">
+  <img src="https://github.com/user-attachments/assets/2b2f1c2e-ad04-4f61-ba00-e98a2254046f" alt="微信群" width="300" height="300"">
 </p>
 
 ## 微信公众号
