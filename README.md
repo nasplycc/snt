@@ -31,13 +31,7 @@
 
 ## 快速开始
 
-### 1. 安装依赖
-
-```bash
-docker pull nasply/snt:1.0
-```
-
-### 2. 启动应用（Docker Compose，推荐）
+### 1. 启动应用（Docker Compose，推荐）
 
 > ⚠️ **必须使用 `network_mode: "host"`**，否则无法监测宿主机主网卡接口。
 
@@ -61,7 +55,7 @@ services:
 docker compose up -d
 ```
 
-### 3. 启动应用（Docker Run）
+### 2. 启动应用（Docker Run）
 
 > ⚠️ **必须使用 `--network host`**，否则无法监测宿主机主网卡接口。
 
@@ -72,7 +66,7 @@ docker run -d --name snt --privileged --network host \
   nasplycc/snt:latest
 ```
 
-### 4. 访问界面
+### 3. 访问界面
 
 打开浏览器访问: `http://你的IP:8080`
 
@@ -155,7 +149,7 @@ MIT License
 
 ## 微信群
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/2b2f1c2e-ad04-4f61-ba00-e98a2254046f" alt="微信群" width="300" height="300">
+  <img src="https://github.com/user-attachments/assets/35a110ed-e6ce-4405-a0ec-b436ff90db87" alt="微信群" width="300" height="300">
 </p>
 
 ## 微信公众号
