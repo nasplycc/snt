@@ -37,13 +37,42 @@
 docker pull nasply/snt:1.0
 ```
 
-### 2. 启动应用
+### 2. 启动应用（Docker Compose，推荐）
 
-```bash
-docker run -d --name snt --privileged -p 8080:8080 -v /opt/snt/data:/nasply/data -v /opt/snt/logs:/nasply/logs nasply/snt:1.0
+> ⚠️ **必须使用 `network_mode: "host"`**，否则无法监测宿主机主网卡接口。
+
+```yaml
+version: "3.8"
+
+services:
+  snt:
+    image: nasplycc/snt:latest
+    container_name: snt
+    restart: unless-stopped
+    network_mode: "host"
+    volumes:
+      - /opt/snt/data:/nasply/data
+      - /opt/snt/logs:/nasply/logs
 ```
 
-### 3. 访问界面
+启动：
+
+```bash
+docker compose up -d
+```
+
+### 3. 启动应用（Docker Run）
+
+> ⚠️ **必须使用 `--network host`**，否则无法监测宿主机主网卡接口。
+
+```bash
+docker run -d --name snt --privileged --network host \
+  -v /opt/snt/data:/nasply/data \
+  -v /opt/snt/logs:/nasply/logs \
+  nasplycc/snt:latest
+```
+
+### 4. 访问界面
 
 打开浏览器访问: `http://你的IP:8080`
 
