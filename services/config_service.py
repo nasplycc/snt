@@ -11,7 +11,7 @@ class ConfigService:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         # 使用正确的配置文件路径
-        self.config_file = "/vol1/1000/Smart-Network-Tool/data/config.json"
+        self.config_file = "data/config.json"
         
         # 默认配置 - 与前端保持一致
         self.default_config = {

@@ -33,116 +33,19 @@
 
 ### 1. 安装依赖
 
-**飞牛NAS 用户:**
 ```bash
-sudo -i
-apt update
-apt install -y python3-flask python3-psutil python3-requests screen
-```
-
-**其他系统:**
-```bash
-pip3 install flask psutil requests
+docker pull nasply/snt:1.0
 ```
 
 ### 2. 启动应用
 
-**调试模式（快速启动）:**
 ```bash
-python3 app.py [端口]
-```
-- 直接运行Python脚本，适合快速调试
-- 支持端口号参数（默认8080）
-- 生产模式运行（debug=False）
-
-**完整启动（推荐）:**
-```bash
-./start.sh [端口]
-```
-- 检查并自动安装依赖（Flask/psutil/requests）
-- 创建必要的数据目录
-- 显示友好的启动信息和访问地址
-- 包含环境检查和错误处理
-
-**后台运行（生产环境）:**
-```bash
-./start_daemon.sh [端口]
-```
-
-**停止服务:**
-```bash
-./stop.sh
+docker run -d --name snt --privileged -p 8080:8080 -v /opt/snt/data:/nasply/data -v /opt/snt/logs:/nasply/logs nasply/snt:1.0
 ```
 
 ### 3. 访问界面
 
 打开浏览器访问: `http://你的IP:8080`
-
-## 开机自启
-
-### 推荐方式：systemd 服务管理（推荐）
-
-**安装服务:**
-```bash
-sudo ./install_systemd.sh [用户名]
-```
-- 服务会自动开机自启
-
-**管理命令:**
-```bash
-# 查看服务状态
-systemctl status smart-network-tool
-
-# 启动服务
-systemctl start smart-network-tool
-
-# 停止服务
-systemctl stop smart-network-tool
-
-# 重启服务
-systemctl restart smart-network-tool
-
-# 禁用开机自启
-systemctl disable smart-network-tool
-
-# 启用开机自启
-systemctl enable smart-network-tool
-
-# 查看实时日志
-journalctl -u smart-network-tool -f
-
-# 查看应用日志
-tail -f logs/smart_network_tool.log
-```
-
-**卸载服务:**
-```bash
-sudo ./uninstall_systemd.sh
-```
-
-### 备用方案：screen 方式（已弃用）
-
-1. 安装 screen:
-```bash
-apt install -y screen
-```
-
-2. 创建开机脚本:
-```bash
-cat > /etc/rc.local << 'EOF'
-#!/bin/bash
-sleep 10
-cd /vol1/1000/Smart-Network-Tool
-screen -dmS smart-network-tool python3 app.py
-exit 0
-EOF
-chmod +x /etc/rc.local
-```
-
-3. 验证:
-```bash
-screen -ls  # 查看会话
-```
 
 ## 文件结构
 
@@ -151,14 +54,6 @@ Smart-Network-Tool/
 ├── app.py                    # 主应用程序
 ├── README.md                 # 项目说明文档
 ├── LOGGING.md               # 日志系统文档
-├── SYSTEMD.md               # systemd服务管理文档
-├── smart-network-tool.service # systemd服务配置文件
-├── install_systemd_final.sh # systemd安装脚本
-├── install.sh               # 项目安装脚本
-├── start.sh                 # 启动脚本
-├── start_daemon.sh          # 后台启动脚本
-├── stop.sh                  # 停止脚本
-├── uninstall_systemd.sh     # systemd卸载脚本
 ├── requirements.txt         # Python依赖
 ├── data/                    # 数据目录
 ├── logs/                    # 日志目录
@@ -228,14 +123,15 @@ MIT License
 - 使用者须确保符合所在地法规及运营商政策，并自行承担因流量异常或服务限制引发的风险。
 - 作者不对任何使用后果提供担保或承担责任。
 
+
 ## 微信群
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/112cc959-a47a-4b38-8f40-95a7715429a8" alt="微信群" width="300" height="300"">
+  <img src="https://github.com/user-attachments/assets/2b2f1c2e-ad04-4f61-ba00-e98a2254046f" alt="微信群" width="300" height="300">
 </p>
 
 ## 微信公众号
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/20290a26-f15b-4549-a366-cd16ef42ba13" alt="微信公众号" width="220" height="220"">
+  <img src="https://github.com/user-attachments/assets/20290a26-f15b-4549-a366-cd16ef42ba13" alt="微信公众号" width="220" height="220">
 </p>
 
 

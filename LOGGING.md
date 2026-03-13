@@ -19,14 +19,19 @@
 
 ### 1. 启动应用
 ```bash
-# 调试模式
-python3 app.py [端口]
-
-# 完整启动
-./start.sh [端口]
+docker run -d --name snt --privileged -p 8080:8080 -v /opt/snt/data:/nasply/data -v /opt/snt/logs:/nasply/logs nasply/snt:1.0
 ```
 
-### 2. 查看实时日志
+### 2. 使用docker命令查看实时日志
+```bash
+# 查看主日志文件
+docker logs -f snt
+
+# 查看最后100行
+docker logs -f -n 100 snt
+```
+
+### 3. 查看实时日志
 ```bash
 # 查看主日志文件
 tail -f logs/smart_network_tool.log
